@@ -67,13 +67,13 @@
     const TEXT={
       title:"NodeShort ｜ Xem phim tích điểm thưởng · Mở khóa đặc quyền",
       desc:"NodeShort｜Xem phim theo gu｜Điểm thưởng trong ứng dụng｜Mở VIP & quyền lợi giải trí｜Sự kiện minh bạch",
-      hero_title:"Sự kiện xem phim tháng 11",
-      hero_sub:`Xem phim tích điểm thưởng · Mở khóa Kim Cương đặc quyền\n💎 Xem càng lâu, nhận ưu đãi càng cao · Tỷ lệ công khai`,
+      hero_title:"Xem phim nhận Xu · Tham gia hệ thống quyền lợi dành cho thành viên mới",
+      hero_sub:`Kim Cương · Huy hiệu · Quy trình thăng hạng cho người dùng muốn tham gia lâu dài`,
       btn_join:"Tham gia",
       btn_group:"Vào nhóm",
-      stat_1:"Thành viên thường: 30.000 điểm = 1 KC",
-      stat_2:"Thành viên hoạt động: 20.000 điểm = 1 KC",
-      stat_3:"Thành viên có Huy hiệu: 10.000 điểm = 1 KC",
+      stat_1:"Thành viên thường: 30.000 Xu → 1 KC",
+      stat_2:"Thành viên cộng đồng: 20.000 Xu → 1 KC",
+      stat_3:"Thành viên có Huy hiệu: 10.000 Xu → 1 KC",
       period:"Thời gian: 01/11/2025 – 30/11/2025",
       vip_tip:"Kim Cương là điểm thưởng trong ứng dụng, dùng để mở VIP & quyền lợi giải trí.",
       footer:"© 2025 NodeShort. Bảo lưu mọi quyền · Chính sách · Minh bạch hệ thống"
@@ -135,19 +135,6 @@ fbq('track','PageView');
   <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1853633115227764&ev=PageView&noscript=1"/>
   <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4246326045691268&ev=PageView&noscript=1"/>
 </noscript>
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '4246326045691268');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4246326045691268&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 <header class="header">
@@ -165,9 +152,10 @@ fbq('track', 'PageView');
       <h1 class="hero-title" id="hero_title"></h1>
       <p class="hero-sub" id="hero_sub"></p>
       <div class="online">Đang trực tuyến: <b id="onlineNum">—</b></div>
+      <p class="muted action-tip">Đăng ký miễn phí · Vào “Tài khoản → Nhiệm vụ tân thủ” để nhận thông tin mới nhất.</p>
       <div class="stats">
-        <div class="stat-item"><p id="stat_1"></p></div>
-        <div class="stat-item"><p id="stat_2"></p></div>
+        <div class="stat-item"><p id="stat_1">Thành viên thường: 30.000 Xu → 1 KC</p></div>
+        <div class="stat-item"><p id="stat_2">Thành viên cộng đồng: 20.000 Xu → 1 KC</p></div>
         <div class="stat-item"><p id="stat_3"></p></div>
       </div>
       <p class="muted" id="period" style="font-size:12px"></p>
@@ -191,39 +179,13 @@ fbq('track', 'PageView');
     </div>
   </div>
 </section>
-<section class="container section">
-  <h2 class="section-title">Kim Cương dùng để làm gì?</h2>
-  <div class="grid-3">
-    <div class="card"><h3>① Đặc quyền thành viên</h3><p>Mở khóa quyền lợi hiển thị công khai (xác thực khi cần) • Tập trung trải nghiệm giải trí.</p></div>
-    <div class="card"><h3>② Mở VIP</h3><p>Xem phim không giới hạn, quà sinh nhật (VIP Năm), ưu tiên hỗ trợ.</p></div>
-    <div class="card"><h3>③ Huy hiệu quốc gia</h3><p>Tham gia chương trình cộng đồng theo quy định đang áp dụng.</p></div>
-  </div>
-</section>
-<section class="container section">
-  <h2 class="section-title">Giá VIP ưu đãi</h2>
-  <p class="muted" id="vip_tip" style="text-align:center"></p>
-  <div class="grid-2">
-    <div class="card"><h3>VIP Ngày</h3><p>1 KC ≈ 26.400₫</p></div>
-    <div class="card"><h3>VIP Tuần</h3><p>5 KC ≈ 132.000₫</p></div>
-    <div class="card"><h3>VIP 3 Tháng</h3><p>8 KC ≈ 211.200₫</p></div>
-    <div class="card"><h3>VIP Năm</h3><p>12 KC ≈ 316.800₫</p></div>
-  </div>
-  <h3 class="section-sub" style="margin-top:12px">So sánh VIP</h3>
-  <table aria-label="VIP Compare">
-    <tr><th>Hạng</th><th>Giới hạn xem</th><th>Quyền lợi</th></tr>
-    <tr><td>Thường</td><td>Có giới hạn</td><td>—</td></tr>
-    <tr><td>VIP Ngày</td><td>Không giới hạn</td><td>Ưu đãi sự kiện</td></tr>
-    <tr><td>VIP Tuần / 3 Tháng / Năm</td><td>Không giới hạn</td><td>Mở đặc quyền bằng Kim Cương (điểm thưởng)</td></tr>
-  </table>
-  <div style="text-align:center;margin-top:12px"><button class="btn primary" onclick="openApp('open_vip')">Mở VIP</button></div>
-  <p class="muted" style="font-size:12px;text-align:center">Ưu đãi đến 31/12/2025</p>
-</section>
+
 <section class="container section">
   <h2 class="section-title">3 bước đơn giản</h2>
   <div class="grid-3">
-    <div class="card"><h3>① Tạo tài khoản</h3><p>Nhập SĐT/Email và xác thực.</p></div>
-    <div class="card"><h3>② Xem phim</h3><p>Hệ thống ghi nhận thời gian xem để gợi ý nội dung theo gu.</p></div>
-    <div class="card"><h3>③ Mở quyền lợi</h3><p>Đủ điều kiện trong ứng dụng → Mở đặc quyền theo quy trình hệ thống.</p></div>
+    <div class="card"><h3>① Đăng ký tài khoản</h3><p>Bắt đầu hành trình của bạn chỉ trong vài giây.</p></div>
+    <div class="card"><h3>② Xem phim tích Xu</h3><p>Mỗi phút xem đều được ghi nhận · Xu có thể đổi thành Kim Cương.</p></div>
+    <div class="card"><h3>③ Hoàn thành Nhiệm vụ tân thủ</h3><p>Xem danh sách nhiệm vụ có thể thực hiện ngay và nhận thông tin sự kiện mới nhất.</p></div>
   </div>
 </section>
 <section class="container section">
@@ -233,6 +195,7 @@ fbq('track', 'PageView');
     <div class="card"><h3>Quyền lợi đối tác</h3><p>Chủ sở hữu Huy hiệu có thể tham gia chương trình cộng đồng theo quy định.</p></div>
   </div>
   <button class="btn secondary" onclick="contactCS()">CSKH</button>
+  <p class="muted" style="margin-top:8px;font-size:13px">Các chương trình liên quan đến DP và Huy hiệu phù hợp với người dùng muốn tham gia hệ sinh thái lâu dài.</p>
 </section>
 <section class="container section" id="rules">
   <h2 class="section-title">Quy định & chống gian lận</h2>
@@ -249,6 +212,18 @@ fbq('track', 'PageView');
 <section class="container section" id="faq">
   <h2 class="section-title">Câu hỏi thường gặp (FAQ)</h2>
   <div class="card faq">
+    <details>
+      <summary><span class="qicon">🚀</span>Tôi mới đăng ký, bước tiếp theo tôi nên làm gì?</summary>
+      <div class="faq-body"><p>Mở mục “Tài khoản → Nhiệm vụ tân thủ” để xem danh sách nhiệm vụ bạn có thể hoàn thành ngay.</p></div>
+    </details>
+    <details>
+      <summary><span class="qicon">🆓</span>Đăng ký tài khoản có mất phí không?</summary>
+      <div class="faq-body"><p>Không. Việc đăng ký và trải nghiệm nội dung cơ bản là miễn phí. Bạn chỉ mở VIP hoặc quyền lợi nâng cao khi thật sự cần.</p></div>
+    </details>
+    <details>
+      <summary><span class="qicon">💳</span>Có bắt buộc nạp tiền khi tham gia không?</summary>
+      <div class="faq-body"><p>Không bắt buộc. Bạn có thể xem phim, làm Nhiệm vụ tân thủ và tìm hiểu hệ thống trước rồi mới quyết định có mở VIP hay không.</p></div>
+    </details>
     <details>
       <summary><span class="qicon">💎</span>Làm sao mở Kim Cương đặc quyền?</summary>
       <div class="faq-body"><p>Người dùng đáp ứng điều kiện trong ứng dụng có thể mở Kim Cương để nhận quyền lợi giải trí.</p></div>
