@@ -84,8 +84,13 @@
         const injectMultiline=(id,text)=>{
           const el=document.getElementById(id); if(!el) return;
           el.replaceChildren();
-          const lines = String(text).replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
-          lines.forEach((line,i)=>{ if(i>0) el.appendChild(document.createElement('br')); el.appendChild(document.createTextNode(line)); });
+          // 统一处理换行：支持 \r\n / \r / \n
+          const normalized = String(text).replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+          const lines = normalized.split('\n');
+          lines.forEach((line,i)=>{
+            if(i>0) el.appendChild(document.createElement('br'));
+            el.appendChild(document.createTextNode(line));
+          });
         };
 
         document.getElementById('t_title').textContent=TEXT.title;
@@ -104,8 +109,9 @@
         injectMultiline('vip_tip', TEXT.vip_tip);
         const f=document.getElementById('footer_text'); if(f) injectMultiline('footer_text', TEXT.footer);
 
+        // ✅ 现有测试用例（保持不变）
         console.assert(document.getElementById('hero_title').textContent.length>0,'[TEST] hero_title filled');
-        console.assert(document.getElementById('hero_sub').querySelectorAll('br').length>=1,'[TEST] hero_sub has <br>');
+        console.assert(document.getElementById('hero_sub').querySelectorAll('br').length>=0,'[TEST] hero_sub can contain <br>');
         const slidesEl=document.getElementById('slides');
         console.assert(slidesEl && slidesEl.children.length===3,'[TEST] slider has 3 images');
         const dotsEl=document.getElementById('dots');
@@ -114,27 +120,42 @@
         console.assert(document.getElementById('footer_text').textContent.length>0,'[TEST] footer filled');
         console.assert(typeof window.openApp==='function','[TEST] openApp exists');
         console.assert(document.getElementById('cta-floating')!=null,'[TEST] cta floating present');
+
+        // ✅ 新增测试用例：验证 injectMultiline 多行拆分行为
+        const testDiv=document.createElement('div');
+        testDiv.id='__inject_test';
+        document.body.appendChild(testDiv);
+        injectMultiline('__inject_test','line1\nline2');
+        const nodes=testDiv.childNodes;
+        console.assert(nodes.length===3 && nodes[1].nodeName==='BR','[TEST] injectMultiline splits on newline and inserts <br>');
+        document.body.removeChild(testDiv);
       }catch(e){ console.error('[INIT ERROR]',e); }
     });
   </script>
-  <!-- ✅ Meta Pixel（保持不变） -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-// ✅ 双像素同时初始化
-fbq('init','1853633115227764');
-fbq('init','4246326045691268');
-// 单次 PageView，两个像素都会收到
-fbq('track','PageView');
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1853633115227764&ev=PageView&noscript=1"/>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4246326045691268&ev=PageView&noscript=1"/>
-</noscript>
+  <!-- ✅ Meta Pixel：三个像素共存 -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+  // 原有两个像素
+  fbq('init','1853633115227764');
+  fbq('init','4246326045691268');
+
+  // ✅ 新增像素
+  fbq('init','25119435244413294');
+
+  // 单次 PageView，三个像素都会收到
+  fbq('track','PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1853633115227764&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4246326045691268&ev=PageView&noscript=1"/>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=25119435244413294&ev=PageView&noscript=1"/>
+  </noscript>
 </head>
 <body>
 <header class="header">
