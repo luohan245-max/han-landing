@@ -61,22 +61,24 @@
     .card.faq .faq-body{max-height:0;overflow:hidden;opacity:.0;transition:max-height .28s ease, opacity .22s ease}
     .card.faq details[open] .faq-body{max-height:320px;opacity:1}
     .card.faq p{margin:0;padding:0 16px 14px;color:var(--muted);line-height:1.65}
+    .muted{color:var(--muted)}
   </style>
   <script>
-    // —— 文案（中线版） ——
+    // —— 文案（合规中线版 + 钻石定价说明） ——
     const TEXT={
-      title:"NodeShort ｜ Xem phim tích điểm thưởng · Mở khóa đặc quyền",
-      desc:"NodeShort｜Xem phim theo gu｜Điểm thưởng trong ứng dụng｜Mở VIP & quyền lợi giải trí｜Sự kiện minh bạch",
-      hero_title:"Xem phim nhận Xu · Hệ thống quyền lợi dành cho thành viên mới",
-      hero_sub:`Kim Cương · Huy hiệu · Quy trình thăng hạng cho người dùng muốn gắn bó lâu dài`,
+      title:"NodeShort · Xem phim, tích điểm, mở quyền lợi thành viên",
+      desc:"NodeShort – Ứng dụng xem phim theo gu, tích Xu trong app, đổi Kim Cương để mở VIP và quyền lợi giải trí, sự kiện rõ ràng minh bạch.",
+      hero_title:"Sự kiện xem phim tháng 11 · Tích Xu đổi Kim Cương · Quyền lợi thành viên",
+      hero_sub:"Mở app xem phim mỗi ngày
+Xu tự tích trong tài khoản · Đổi Xu lấy Kim Cương để mở VIP và các gói giải trí",
       btn_join:"Truy cập ngay",
-      btn_group:"Vào nhóm",
+      btn_group:"Vào nhóm chính thức",
       stat_1:"Thành viên thường: 30.000 Xu → 1 KC",
       stat_2:"Thành viên cộng đồng: 20.000 Xu → 1 KC",
-      stat_3:"Thành viên có Huy hiệu: 10.000 Xu → 1 KC",
-      period:"Thời gian: 01/11/2025 – 30/11/2025",
-      vip_tip:"Kim Cương là điểm thưởng trong ứng dụng, dùng để mở VIP & quyền lợi giải trí.",
-      footer:"© 2025 NodeShort. Bảo lưu mọi quyền · Chính sách · Minh bạch hệ thống"
+      stat_3:"Có Huy hiệu: 10.000 Xu → 1 KC",
+      period:"Thời gian áp dụng: 01/11/2025 – 30/11/2025",
+      vip_tip:"Kim Cương (KC) là đơn vị dùng để thanh toán trong ứng dụng. Khi nạp, tham chiếu khoảng 1 KC ≈ 1 USD, dùng để mở VIP, mở khóa nội dung và gói giải trí trong app; không liên quan tới bất kỳ cam kết sinh lời nào.",
+      footer:"© 2025 NodeShort. Tất cả quyền được bảo lưu · Sản phẩm giải trí · Không cam kết lợi nhuận"
     };
 
     document.addEventListener('DOMContentLoaded',()=>{
@@ -84,7 +86,6 @@
         const injectMultiline=(id,text)=>{
           const el=document.getElementById(id); if(!el) return;
           el.replaceChildren();
-          // 统一处理换行：支持 \r\n / \r / \n
           const normalized = String(text).replace(/\r\n/g,'\n').replace(/\r/g,'\n');
           const lines = normalized.split('\n');
           lines.forEach((line,i)=>{
@@ -109,7 +110,6 @@
         injectMultiline('vip_tip', TEXT.vip_tip);
         const f=document.getElementById('footer_text'); if(f) injectMultiline('footer_text', TEXT.footer);
 
-        // ✅ 现有测试用例（保持不变）
         console.assert(document.getElementById('hero_title').textContent.length>0,'[TEST] hero_title filled');
         console.assert(document.getElementById('hero_sub').querySelectorAll('br').length>=0,'[TEST] hero_sub can contain <br>');
         const slidesEl=document.getElementById('slides');
@@ -121,7 +121,9 @@
         console.assert(typeof window.openApp==='function','[TEST] openApp exists');
         console.assert(document.getElementById('cta-floating')!=null,'[TEST] cta floating present');
 
-        // ✅ 新增测试用例：验证 injectMultiline 多行拆分行为
+        // 新增测试：确保 joinGroup 已定义
+        console.assert(typeof window.joinGroup==='function','[TEST] joinGroup exists');
+
         const testDiv=document.createElement('div');
         testDiv.id='__inject_test';
         document.body.appendChild(testDiv);
@@ -141,14 +143,10 @@
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
   }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-  // 原有两个像素
   fbq('init','1853633115227764');
   fbq('init','4246326045691268');
-
-  // ✅ 新增像素
   fbq('init','25119435244413294');
 
-  // 单次 PageView，三个像素都会收到
   fbq('track','PageView');
   </script>
   <noscript>
@@ -173,13 +171,14 @@
       <h1 class="hero-title" id="hero_title"></h1>
       <p class="hero-sub" id="hero_sub"></p>
       <div class="online">Đang trực tuyến: <b id="onlineNum">—</b></div>
-      <p class="muted action-tip">Đăng ký miễn phí · Vào “Tài khoản → Nhiệm vụ tân thủ” để nhận thông tin mới nhất.</p>
+      <p class="muted action-tip">Đăng ký hoàn toàn miễn phí · Vào \"Tài khoản → Nhiệm vụ tân thủ\" để xem hướng dẫn và thông tin mới nhất.</p>
       <div class="stats">
         <div class="stat-item"><p id="stat_1">Thành viên thường: 30.000 Xu → 1 KC</p></div>
         <div class="stat-item"><p id="stat_2">Thành viên cộng đồng: 20.000 Xu → 1 KC</p></div>
-        <div class="stat-item"><p id="stat_3"></p></div>
+        <div class="stat-item"><p id="stat_3">Thành viên có Huy hiệu: 10.000 Xu → 1 KC</p></div>
       </div>
       <p class="muted" id="period" style="font-size:12px"></p>
+      <p class="muted" id="vip_tip" style="font-size:12px;margin-top:4px"></p>
     </div>
     <div class="slider" aria-label="Preview">
       <div class="slides" id="slides">
@@ -204,27 +203,28 @@
 <section class="container section">
   <h2 class="section-title">3 bước đơn giản</h2>
   <div class="grid-3">
-    <div class="card"><h3>① Đăng ký tài khoản</h3><p>Bắt đầu hành trình của bạn chỉ trong vài giây.</p></div>
-    <div class="card"><h3>② Xem phim tích Xu</h3><p>Mỗi phút xem đều được ghi nhận · Xu có thể đổi thành Kim Cương.</p></div>
-    <div class="card"><h3>③ Hoàn thành Nhiệm vụ tân thủ</h3><p>Xem danh sách nhiệm vụ có thể làm ngay · Nhận thông tin sự kiện mới nhất.</p></div>
+    <div class="card"><h3>① Đăng ký tài khoản</h3><p>Đăng ký xong là vào xem phim ngay, không cần thao tác phức tạp.</p></div>
+    <div class="card"><h3>② Xem phim tích Xu</h3><p>Thời gian xem hợp lệ sẽ được hệ thống tự cộng Xu · Xu đủ có thể đổi sang Kim Cương để dùng cho các quyền lợi giải trí trong app.</p></div>
+    <div class="card"><h3>③ Hoàn thành Nhiệm vụ tân thủ</h3><p>Mở mục Nhiệm vụ tân thủ, làm các nhiệm vụ đơn giản và cập nhật thông tin sự kiện tháng 11.</p></div>
   </div>
 </section>
 <section class="container section">
   <h2 class="section-title">DP là gì?</h2>
   <div class="grid-2">
-    <div class="card"><h3>DP = Điểm nội dung cộng đồng</h3><p>Dùng cho tính năng chia sẻ và tương tác trong hệ sinh thái theo thông báo.</p></div>
-    <div class="card"><h3>Quyền lợi đối tác</h3><p>Chủ sở hữu Huy hiệu có thể tham gia chương trình cộng đồng theo quy định.</p></div>
+    <div class="card"><h3>DP = Điểm nội dung cộng đồng</h3><p>DP là điểm dùng cho một số tính năng nội bộ trong hệ sinh thái NodeShort theo từng thông báo; không phải sản phẩm đầu tư và không đi kèm bất kỳ cam kết lợi nhuận nào.</p></div>
+    <div class="card"><h3>Quyền lợi cộng đồng</h3><p>Người có Huy hiệu có thể tham gia một số chương trình cộng đồng theo quy định hiển thị trong ứng dụng NodeShort.</p></div>
   </div>
   <button class="btn secondary" onclick="contactCS()">Liên hệ CSKH</button>
-  <p class="muted" style="margin-top:8px;font-size:13px">Các chương trình liên quan đến DP và Huy hiệu phù hợp với người dùng muốn tham gia hệ sinh thái lâu dài.</p>
+  <p class="muted" style="margin-top:8px;font-size:13px">Các chương trình liên quan tới DP, Huy hiệu và Kim Cương phù hợp với người dùng muốn gắn bó và sử dụng sản phẩm giải trí lâu dài, không phải tư vấn tài chính.</p>
 </section>
 <section class="container section" id="rules">
   <h2 class="section-title">Quy định & chống gian lận</h2>
   <div class="warn" role="note">
-    <p>Quyền lợi được hiển thị công khai và do hệ thống tự động xác minh.</p>
-    <p>Hệ thống kiểm tra hành vi bất thường: SĐT ảo, đăng ký hàng loạt, tool/giả lập, can thiệp thiết bị…</p>
-    <p>Phát hiện gian lận: Thu hồi quyền lợi, có thể khóa tài khoản.</p>
-    <p>Tham gia = Đồng ý quy định và cơ chế bảo vệ người dùng.</p>
+    <p>Tất cả quyền lợi đều được hiển thị rõ trong ứng dụng và được hệ thống tự động kiểm tra.</p>
+    <p>Hệ thống sẽ quét và phát hiện các hành vi bất thường như: dùng SĐT ảo, đăng ký hàng loạt, dùng tool/giả lập, can thiệp thiết bị…</p>
+    <p>Nếu phát hiện gian lận, các quyền lợi liên quan sẽ bị thu hồi và tài khoản có thể bị khóa theo quy định.</p>
+    <p>NodeShort là sản phẩm giải trí số, không cung cấp sản phẩm tài chính và không cam kết bất kỳ mức lợi nhuận hay hoàn vốn nào.</p>
+    <p>Khi tham gia, bạn được xem là đã đọc và đồng ý với các quy định bảo vệ người dùng nêu trên.</p>
   </div>
   <div style="text-align:center;margin-top:12px">
     <button class="btn secondary" onclick="joinGroup()">Vào nhóm</button>
@@ -235,53 +235,53 @@
   <div class="card faq">
     <details>
       <summary><span class="qicon">🚀</span>Tôi mới đăng ký, bước tiếp theo tôi nên làm gì?</summary>
-      <div class="faq-body"><p>Mở mục “Tài khoản → Nhiệm vụ tân thủ” để xem danh sách nhiệm vụ bạn có thể hoàn thành ngay.</p></div>
+      <div class="faq-body"><p>Bạn chỉ cần mở mục \"Tài khoản → Nhiệm vụ tân thủ\" để xem những việc có thể làm ngay cho tài khoản mới.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🆓</span>Đăng ký tài khoản có mất phí không?</summary>
-      <div class="faq-body"><p>Không. Việc đăng ký và trải nghiệm nội dung cơ bản là miễn phí. Bạn chỉ mở VIP hoặc quyền lợi nâng cao khi thật sự cần.</p></div>
+      <div class="faq-body"><p>Không. Đăng ký tài khoản và xem nội dung cơ bản đều miễn phí; chỉ khi bạn muốn mở thêm VIP hoặc gói nâng cao mới cần thanh toán.</p></div>
     </details>
     <details>
       <summary><span class="qicon">💳</span>Có bắt buộc nạp tiền khi tham gia không?</summary>
-      <div class="faq-body"><p>Không bắt buộc. Bạn có thể xem phim, làm Nhiệm vụ tân thủ và tìm hiểu hệ thống trước rồi mới quyết định có mở VIP hay không.</p></div>
+      <div class="faq-body"><p>Hoàn toàn không bắt buộc. Bạn có thể cứ xem phim, làm Nhiệm vụ tân thủ, tìm hiểu hệ thống trước rồi mới quyết định có mở VIP hay không.</p></div>
     </details>
     <details>
       <summary><span class="qicon">💎</span>Làm sao mở Kim Cương đặc quyền?</summary>
-      <div class="faq-body"><p>Người dùng đáp ứng điều kiện trong ứng dụng có thể mở Kim Cương để nhận quyền lợi giải trí.</p></div>
+      <div class="faq-body"><p>Khi đáp ứng điều kiện hiển thị trong ứng dụng, bạn có thể mở gói Kim Cương để dùng các quyền lợi giải trí; mục này không liên quan tới lợi nhuận tài chính.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🎟️</span>VIP có lợi gì?</summary>
-      <div class="faq-body"><p>Xem không giới hạn; VIP Năm có quà sinh nhật; một số sự kiện ưu đãi mở đặc quyền.</p></div>
+      <div class="faq-body"><p>VIP giúp bạn xem thoải mái hơn, ít giới hạn; một số gói VIP Năm có quà sinh nhật và được ưu tiên trong một số chương trình ưu đãi giải trí.</p></div>
     </details>
     <details>
       <summary><span class="qicon">📈</span>DP là gì?</summary>
-      <div class="faq-body"><p>Điểm nội dung cộng đồng dùng cho tính năng chia sẻ trong hệ sinh thái NodeShort.</p></div>
+      <div class="faq-body"><p>DP là điểm nội dung cộng đồng dùng cho một số tính năng nội bộ trong hệ sinh thái NodeShort; không phải token đầu tư và cũng không phải sản phẩm tài chính.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🇻🇳</span>Huy hiệu quốc gia?</summary>
-      <div class="faq-body"><p>Giảm ngưỡng mở đặc quyền Kim Cương; tham gia chương trình cộng đồng theo quy định.</p></div>
+      <div class="faq-body"><p>Một số Huy hiệu quốc gia giúp giảm ngưỡng mở vài đặc quyền Kim Cương và mở quyền tham gia chương trình cộng đồng; Huy hiệu không gắn với bất kỳ cam kết lợi nhuận nào.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🛡️</span>Bị đánh dấu bất thường?</summary>
-      <div class="faq-body"><p>Hệ thống tạm khóa quyền lợi để xác minh; gian lận sẽ bị từ chối và khóa tài khoản.</p></div>
+      <div class="faq-body"><p>Nếu tài khoản bị đánh dấu bất thường, hệ thống sẽ tạm khóa các quyền lợi liên quan để kiểm tra; nếu xác định là gian lận, quyền lợi có thể bị thu hồi và tài khoản bị khóa.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🔗</span>Không vào được Telegram?</summary>
-      <div class="faq-body"><p>Kiểm tra mạng và cập nhật ứng dụng; nếu vẫn lỗi vui lòng liên hệ CSKH.</p></div>
+      <div class="faq-body"><p>Hãy kiểm tra kết nối mạng và cập nhật ứng dụng Telegram; nếu vẫn không vào được, bạn có thể liên hệ CSKH để được hỗ trợ thêm.</p></div>
     </details>
     <details>
       <summary><span class="qicon">🙋</span>Cần hỗ trợ?</summary>
-      <div class="faq-body"><p>Nhấn “CSKH”, gửi ID tài khoản và ảnh màn hình để xử lý nhanh.</p></div>
+      <div class="faq-body"><p>Nhấn nút \"CSKH\", gửi ID tài khoản và ảnh màn hình lỗi, đội ngũ hỗ trợ sẽ phản hồi trong thời gian sớm nhất có thể.</p></div>
     </details>
     <details>
-      <summary><span class="qicon">⚖️</span>Minh bạch & tuân thủ</summary>
-      <div class="faq-body"><p>Quyền lợi được quản lý bởi hệ thống theo quy định đang áp dụng.</p></div>
+      <summary><span class="qicon">⚖️</span>NodeShort có phải dự án đầu tư tài chính không?</summary>
+      <div class="faq-body"><p>Không. NodeShort là sản phẩm giải trí số. Xu, Kim Cương, DP và Huy hiệu đều là quyền lợi/điểm thưởng dùng trong hệ sinh thái nội bộ, không phải token đầu tư và không kèm theo cam kết lợi nhuận.</p></div>
     </details>
   </div>
 </section>
 <footer class="footer">
   <img src="assets/nodeshort-logo.png" alt="NodeShort" style="max-height:28px;opacity:.9;display:block;margin:0 auto 8px">
-  <p id="footer_text">© 2025 NodeShort. Bảo lưu mọi quyền · Chính sách · Minh bạch hệ thống</p>
+  <p id="footer_text">© 2025 NodeShort. Bảo lưu mọi quyền · Sản phẩm giải trí · Không cam kết lợi nhuận</p>
 </footer>
 <a id="cta-floating" href="https://www.nodeshort.com/h5/#/?code=9HKKIP" target="_blank" rel="noopener noreferrer" data-testid="cta_floating" onclick="try{if(window.fbq){fbq('track','Lead',{source:'cta_floating'});fbq('trackCustom','ClickCTA',{source:'cta_floating'});}}catch(_e){}">Truy cập ngay</a>
 <script>
