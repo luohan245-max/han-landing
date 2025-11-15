@@ -65,15 +65,15 @@
     const TEXT={
       title:"NodeShort · Xem phim, tích điểm, mở quyền lợi thành viên",
       desc:"NodeShort – Ứng dụng xem phim theo gu, tích Xu trong app, đổi Kim Cương để mở VIP và quyền lợi giải trí, sự kiện rõ ràng minh bạch.",
-      hero_title:"Sự kiện xem phim · Tích Xu đổi Kim Cương",
-      hero_sub:"Xem phim mỗi ngày · Tự tích Xu tự động",
-      btn_join:"Truy cập ngay",
+      hero_title:"Xem phim miễn phí · Tự động tích Xu mỗi ngày",
+      hero_sub:"Xem càng lâu · Nhận càng nhiều Xu · Đổi mở quyền lợi giải trí",
+      btn_join:"Đăng ký miễn phí",
       btn_group:"Vào nhóm chính thức",
       stat_1:"Người dùng thường: 30.000 Xu → 1 KC",
       stat_2:"Thành viên cộng đồng: 20.000 Xu → 1 KC",
-      stat_3:"Thành viên Huy hiệu: 10.000 Xu → 1 KC",
-      period:"Thời gian: 01/11/2025 – 30/11/2025",
-      vip_tip:"Kim Cương (KC) là đơn vị định giá trong ứng dụng · 1 KC ≈ 1 USD (tham chiếu) · Dùng để mở VIP & quyền lợi giải trí · Không liên quan đến cam kết lợi nhuận",
+      stat_3:"Thành viên Huy hiệu: 10.000 Xu → 1 KC"Nhiệm vụ tân thủ\" sau khi đăng ký",
+      period:"Sự kiện đang diễn ra trong tháng này",
+      vip_tip:"KC (Kim Cương) là đơn vị dùng trong ứng dụng. Giá trị tham chiếu: 1 KC ≈ 1 USD. KC chỉ dùng để mở VIP và quyền lợi giải trí, không liên quan tới lợi nhuận tài chính",
       footer:"© 2025 NodeShort. Tất cả quyền được bảo lưu · Sản phẩm giải trí · Không cam kết lợi nhuận"
     };
 
@@ -159,7 +159,7 @@
   <div class="container nav">
     <img src="assets/nodeshort-logo.png" alt="NodeShort" width="140" height="32"/>
     <div class="actions">
-      <button class="btn primary" id="btn_join" onclick="openApp('btn_join')">Truy cập ngay</button>
+      <button class="btn primary" id="btn_join" onclick="openApp('btn_join')">Đăng ký miễn phí</button>
       <button class="btn secondary" id="btn_group" onclick="joinGroup()">Vào nhóm chính thức</button>
     </div>
   </div>
@@ -173,12 +173,12 @@
       <div class="online">Đang trực tuyến: <b id="onlineNum">—</b></div>
       <p class="muted action-tip">Đăng ký hoàn toàn miễn phí · Vào "Tài khoản → Nhiệm vụ tân thủ" để xem hướng dẫn và thông tin mới nhất.</p>
       <div class="stats">
-        <div class="stat-item"><p id="stat_1">Người dùng thường: 30.000 Xu → 1 KC</p></div>
-        <div class="stat-item"><p id="stat_2">Thành viên cộng đồng: 20.000 Xu → 1 KC</p></div>
-        <div class="stat-item"><p id="stat_3">Thành viên Huy hiệu: 10.000 Xu → 1 KC</p></div>
+        <div class="stat-item"><p id=\"stat_1\">Người dùng thường: 30.000 Xu → 1 KC</p></div>
+        <div class="stat-item"><p id=\"stat_2\">Thành viên cộng đồng: 20.000 Xu → 1 KC</p></div>
+        <div class="stat-item"><p id=\"stat_3\">Thành viên Huy hiệu: 10.000 Xu → 1 KC</p></div>
       </div>
-      <p class="muted" id="period" style="font-size:12px"></p>
-      <p class="muted" id="vip_tip" style="font-size:12px;margin-top:4px"></p>
+      <p class="muted" id="period" style="font-size:12px">Sự kiện đang diễn ra trong tháng này</p>
+      <p class="muted" id="vip_tip" style="font-size:12px;margin-top:4px">KC (Kim Cương) là đơn vị dùng trong ứng dụng. Giá trị tham chiếu: 1 KC ≈ 1 USD. KC chỉ dùng để mở VIP và quyền lợi giải trí, không liên quan tới lợi nhuận tài chính.</p>
     </div>
     <div class="slider" aria-label="Preview">
       <div class="slides" id="slides">
@@ -218,6 +218,7 @@
 
 <section class="container section">
   <h2 class="section-title">DP là gì?</h2>
+  <p class="muted" style="margin:0 0 8px;font-size:13px">DP là điểm nội bộ · Không phải tiền mã hóa · Không dùng cho giao dịch bên ngoài.</p>
   <div class="grid-2">
     <div class="card"><h3>DP = Điểm nội dung cộng đồng</h3><p>DP là điểm dùng cho một số tính năng nội bộ trong hệ sinh thái NodeShort theo từng thông báo; không phải sản phẩm đầu tư và không đi kèm bất kỳ cam kết lợi nhuận nào.</p></div>
     <div class="card"><h3>Quyền lợi cộng đồng</h3><p>Người có Huy hiệu có thể tham gia một số chương trình cộng đồng theo quy định hiển thị trong ứng dụng NodeShort.</p></div>
@@ -294,7 +295,7 @@
   <img src="assets/nodeshort-logo.png" alt="NodeShort" style="max-height:28px;opacity:.9;display:block;margin:0 auto 8px">
   <p id="footer_text">© 2025 NodeShort. Tất cả quyền được bảo lưu · Sản phẩm giải trí · Không cam kết lợi nhuận</p>
 </footer>
-<a id="cta-floating" href="https://www.nodeshort.com/h5/#/?code=9HKKIP" target="_blank" rel="noopener noreferrer" data-testid="cta_floating" onclick="try{if(window.fbq){fbq('track','Lead',{source:'cta_floating'});fbq('trackCustom','ClickCTA',{source:'cta_floating'});}}catch(_e){}">Truy cập ngay</a>
+<a id="cta-floating" href="https://www.nodeshort.com/h5/#/?code=9HKKIP" target="_blank" rel="noopener noreferrer" data-testid="cta_floating" onclick="try{if(window.fbq){fbq('track','Lead',{source:'cta_floating'});fbq('trackCustom','ClickCTA',{source:'cta_floating'});}}catch(_e){}">Đăng ký miễn phí</a>
 <script>
 (function(){
   window.openApp=function(source){
