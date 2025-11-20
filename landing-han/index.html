@@ -18,9 +18,37 @@
     .container{max-width:1200px;margin:0 auto;padding:24px}
     .header{position:sticky;top:0;background:rgba(11,16,32,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);z-index:50}
     .nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
-    .btn{padding:10px 16px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-    .btn.primary{background:var(--brand);color:#222;border-color:transparent;font-weight:700}
-    .btn.secondary{border-color:var(--brand);color:var(--brand);font-weight:700}
+    .btn{padding:10px 16px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--text);min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;}
+    .btn.primary{
+  background: rgba(246,196,83,0.14);
+  border: 1px solid var(--brand);
+  color: #f6c453;
+  border-radius: 8px;
+  font-weight: 700;
+  padding: 4px 10px;
+  min-height: 32px;
+  height: 32px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: inset 0 0 4px rgba(246,196,83,0.12);
+  transition: .18s;
+}
+    .btn.secondary{
+  border: 1px solid rgba(246,196,83,0.55);
+  color:#f6c453;
+  background:transparent;
+  border-radius:8px;
+  padding:4px 10px;
+  min-height:32px;
+  height:32px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  text-decoration:none;
+  opacity:.85;
+  transition:.18s;
+}
     .hero{padding:32px 24px 0}
     .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
     .hero-title{font-size:clamp(24px, 3.4vw, 40px);font-weight:800;margin:0 0 10px;line-height:1.18}
@@ -44,9 +72,9 @@
     .card{background:var(--card);border:1px solid var(--line);padding:16px;border-radius:var(--radius)}
     .warn{background:rgba(246,196,83,.1);border:1px solid var(--brand);padding:14px;border-radius:14px}
     .footer{padding:24px;text-align:center;color:var(--muted);border-top:1px solid var(--line)}
-    #cta-floating{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--brand);color:#222;padding:12px 18px;border-radius:30px;font-weight:700;cursor:pointer;z-index:99;box-shadow:var(--shadow)}
+    #cta-floating{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--brand);color:#222;padding:12px 18px;border-radius:30px;font-weight:700;cursor:pointer;z-index:99;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}
     @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.grid-3,.grid-2{grid-template-columns:1fr}.slider{height:420px;max-width:360px;margin:16px auto 0}}
-    .card.faq{border-radius:18px;padding:6px}
+    .card.faq{border-radius:18px;padding:6px} /* faq container */
     .card.faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden;transition:border-color .2s ease, box-shadow .2s ease}
     .card.faq details[open]{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand)}
     .card.faq summary{padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;list-style:none;font-weight:700;color:var(--text);border-radius:12px;background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,.02))}
@@ -59,7 +87,11 @@
     .card.faq details[open] .faq-body{max-height:320px;opacity:1}
     .card.faq p{margin:0;padding:0 16px 14px;color:var(--muted);line-height:1.65}
     .muted{color:var(--muted)}
-  </style>
+  .btn.primary:hover{
+  background: rgba(246,196,83,0.18);
+  box-shadow: inset 0 0 10px rgba(246,196,83,0.28);
+}
+</style>
   <script>
     // —— 文案（合规中线版 + 日常表达 + 钻石定价说明） ——
     const TEXT={
@@ -117,7 +149,7 @@
         console.assert(document.getElementById('footer_text').textContent.length>0,'[TEST] footer filled');
         console.assert(typeof window.openApp==='function','[TEST] openApp exists');
         console.assert(document.getElementById('cta-floating')!=null,'[TEST] cta floating present');
-        console.assert(typeof window.joinGroup==='function','[TEST] joinGroup exists');
+        
         // ✅ 新增测试：period & vip_tip 正常渲染
         console.assert(document.getElementById('period') && document.getElementById('period').textContent.length>0,'[TEST] period filled');
         console.assert(document.getElementById('vip_tip') && document.getElementById('vip_tip').textContent.length>0,'[TEST] vip_tip filled');
@@ -155,8 +187,7 @@
   <div class="container nav">
     <img src="assets/nodeshort-logo.png" alt="NodeShort" width="140" height="32"/>
     <div class="actions">
-      <button class="btn primary" id="btn_join" onclick="openApp('btn_join')">Đăng ký miễn phí</button>
-      <button class="btn secondary" id="btn_group" onclick="joinGroup()">Vào nhóm chính thức</button>
+      <a class="btn primary" id="btn_join" href="https://www.nodeshort.com/h5/#/?code=9HKKIP" target="_blank">Truy cập ngay</a>
     </div>
   </div>
 </header>
@@ -225,7 +256,7 @@ Truy cập “Tài khoản → Nhiệm vụ người mới” để vào nhóm c
     <p>Khi tham gia, bạn được xem là đã đọc và đồng ý với các quy định bảo vệ người dùng nêu trên.</p>
   </div>
   <div style="text-align:center;margin-top:12px">
-    <button class="btn secondary" onclick="joinGroup()">Vào nhóm chính thức</button>
+    <a class="btn secondary" href="https://www.nodeshort.com/h5/#/?code=9HKKIP" target="_blank">Truy cập ngay</a>
   </div>
 </section>
 
@@ -289,16 +320,6 @@ Truy cập “Tài khoản → Nhiệm vụ người mới” để vào nhóm c
   window.openApp=function(source){
     try{ if(window.fbq){ fbq('track','Lead',{source: source||'unknown'}); fbq('trackCustom','ClickCTA',{source: source||'unknown'}); } }catch(_e){}
     window.open('https://www.nodeshort.com/h5/#/?code=9HKKIP','_blank','noopener,noreferrer');
-  };
-  window.joinGroup=function(){window.open('https://t.me/NodeShortVN','_blank','noopener,noreferrer')};
-  window.contactCS=function(){
-    try{
-      const pool=(window.CS_POOL&&Array.isArray(window.CS_POOL)&&window.CS_POOL.length>0)? window.CS_POOL : ['Nodeshort009'];
-      let idx=parseInt(localStorage.getItem('ns_cs_idx')||'-1',10); idx = (isNaN(idx)?-1:idx); idx = (idx+1) % pool.length; localStorage.setItem('ns_cs_idx', String(idx));
-      const agent = pool[idx]; const url = `https://t.me/${agent}`;
-      try{ if(window.fbq){ fbq('track','Contact',{channel:'telegram', agent}); fbq('trackCustom','ClickCS',{agent}); } }catch(_e){}
-      window.open(url,'_blank','noopener,noreferrer');
-    }catch(e){ console.error('[CS ROUTER ERROR]', e); window.open('https://t.me/Nodeshort009','_blank','noopener,noreferrer'); }
   };
 
   const slides=document.getElementById('slides');
